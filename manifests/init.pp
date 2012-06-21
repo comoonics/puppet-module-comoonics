@@ -25,7 +25,9 @@ define comoonics::create($localfiles=true, $plymouth=true, $mkintrd=true, $grub=
      include comoonics::install-plymouth
   }
   if $mkinitrd {
-     comoonics::mkinitrd{}
+     comoonics::mkinitrd{
+        $kernelrelease:
+     }
   }
   if $debugfiles {
      include comoonics::install-debugfiles
