@@ -3,6 +3,7 @@ define comoonics::mkinitrd($kernel=$kernelrelease, $force=true, $initrd_prefix="
    if $force {
       $createdfiles="$initrddir/${initrd_prefix}${kernel}${initrd_suffix}"
    }
+   notice("Createing initrd $initrddir/${initrd_prefix}${kernel}${initrd_suffix} for kernel $kernel. Force $force")
    exec {
       "mkinitrd $initrddir/${initrd_prefix}${kernel}${initrd_suffix} ${kernel}":
          path => [ "/opt/atix/comoonics-bootimage", "/bin", "/usr/bin", "/sbin", "/usr/sbin" ],

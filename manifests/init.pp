@@ -14,3 +14,20 @@ class comoonics {
    }
    include comoonics::yumrepo, comoonics::install
 }
+
+define comoonics::create($localfiles=true, $plymouth=true, $mkintrd=true, $grub=true, $debugfiles=false) {
+  include comoonics
+  
+  if $localfiles {
+     include comoonics::install-localfiles
+  }
+  if $plymouth {
+     include comoonics::install-plymouth
+  }
+  if $mkinitrd {
+     comoonics::mkinitrd
+  }
+  if $debugfiles {
+     include comoonics::install-debugfiles
+  }
+}
