@@ -26,14 +26,19 @@ define comoonics::create($localfiles=true, $plymouth=true, $mkinitrd=true, $grub
   if $plymouth {
      include comoonics::install-plymouth
   }
+  if $debugfiles {
+     include comoonics::install-debugfiles
+  }
   if $mkinitrd {
      notice("comoonics::create: Create mkinitrd $kernelrelease")
      comoonics::mkinitrd{
         $kernelrelease:
      }
   }
-  if $debugfiles {
-     include comoonics::install-debugfiles
-  }
+  if $grub {
+     comoonics::grub{
+        $kernelrelease:
+     }
+  }   
   notice("comoonics::create: END")
 }
