@@ -12,19 +12,22 @@ class comoonics {
         $comlevel="preview"
       }
    }
-   include comoonics::yumrepo, comoonics::install
 }
 
-define comoonics::create($localfiles=true, $plymouth=true, $mkintrd=true, $grub=true, $debugfiles=false) {
+define comoonics::create($localfiles=true, $plymouth=true, $mkinitrd=true, $grub=true, $debugfiles=false) {
+  notice("comoonics::create: BEGIN")
+  include comoonics::yumrepo, comoonics::install
   include comoonics
   
   if $localfiles {
+     notice("comoonics::create: install comoonics::install-localfiles")
      include comoonics::install-localfiles
   }
   if $plymouth {
      include comoonics::install-plymouth
   }
   if $mkinitrd {
+     notice("comoonics::create: Create mkinitrd $kernelrelease")
      comoonics::mkinitrd{
         $kernelrelease:
      }
@@ -32,4 +35,5 @@ define comoonics::create($localfiles=true, $plymouth=true, $mkintrd=true, $grub=
   if $debugfiles {
      include comoonics::install-debugfiles
   }
+  notice("comoonics::create: END")
 }

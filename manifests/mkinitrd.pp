@@ -8,6 +8,6 @@ define comoonics::mkinitrd($force=true, $initrd_prefix="initrd_sr-", $initrd_suf
       "mkinitrd $initrddir/${initrd_prefix}${name}${initrd_suffix} ${name}":
          path => [ "/opt/atix/comoonics-bootimage", "/bin", "/usr/bin", "/sbin", "/usr/sbin" ],
          creates => $createdfiles,
-         requires => Class["comoonics::install"],
+         require => Class["comoonics::install"],
    }
 }
