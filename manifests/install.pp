@@ -4,9 +4,10 @@ class comoonics::install {
    notice("comoonics::install running comdist: ${comoonics::comdist}, comdistver: ${comoonics::comdistver}, rootfilesystem: ${rootfilesystem}..")
    if $comoonics::comdist and $comoonics::comdistver and $rootfilesystem {
      notice("Installing package comoonics-bootimage-listfiles-${comoonics::comdist}${comoonics::comdistver}-${rootfilesystem} if need be..")
-     package { "comoonics-bootimage-listfiles-${comoonics::comdist}${comoonics::comdistver}-${rootfilesystem}":
+     $corepackages=[ "comoonics-bootimage-listfiles-${comoonics::comdist}${comoonics::comdistver}-${rootfilesystem}" ]
+     package { $corepackages:
        ensure => present,
-       require => Class["comoonics::yumrepo"],
+       require => Class["comoonics::repo"],
      }
    }
 }
@@ -19,7 +20,7 @@ class comoonics::install-localfiles {
      package {
         $packages:
            ensure => present,
-           require => Class["comoonics::yumrepo"],
+           require => Class["comoonics::repo"],
      }
    }
 }
@@ -32,7 +33,7 @@ class comoonics::install-plymouth {
      package {
         $packages:
            ensure => present,
-           require => Class["comoonics::yumrepo"],
+           require => Class["comoonics::repo"],
      }
    }
 }

@@ -11,13 +11,22 @@ class comoonics {
         $comversion="5.0"
         $comlevel="preview"
       }
+      suse, sles: { 
+        notice("Setting comoonics variables..")
+        $comoonicssupported=1
+        $comdist="sles"
+        $comdistvera=split($operatingsystemrelease, "[.]")
+        $comdistver=$comdistvera[0]
+        $comversion="5.0"
+        $comlevel="preview"
+      }
    }
 }
 
-define comoonics::create($localfiles=true, $plymouth=true, $mkinitrd=true, $grub=true, $debugfiles=false) {
+define comoonics::create($rootdevice, $grubdefault=false, $localfiles=true, $plymouth=true, $mkinitrd=true, $grub=true, $debugfiles=false) {
   notice("comoonics::create: BEGIN")
-  include comoonics::yumrepo, comoonics::install
   include comoonics
+  include comoonics::repo, comoonics::install
   
   if $localfiles {
      notice("comoonics::create: install comoonics::install-localfiles")
@@ -34,11 +43,15 @@ define comoonics::create($localfiles=true, $plymouth=true, $mkinitrd=true, $grub
      comoonics::mkinitrd{
         $kernelrelease:
      }
-  }
-  if $grub {
-     comoonics::grub{
-        $kernelrelease:
-     }
   }   
+  if $grub {
+      comoonics::grubentry{
+         $name:
+             rootdevice=>$rootdevice,
+             grubdefault=>$grubdefault,
+             initrd_prefix=>$initrd_prefix,
+             initrd_suffix=>$initrd_suffix,
+      }
+  }
   notice("comoonics::create: END")
 }
