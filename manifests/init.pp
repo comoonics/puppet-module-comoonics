@@ -1,5 +1,8 @@
 notice("com.oonics Module init.pp..")
 class comoonics {
+   $localfiles = false
+   $plymouth = false
+   $debug = false
    notice("com.oonics Module init.pp lsbdistid: ${lsbdistid}..")
    case $operatingsystem {
       centos,redhat,redhatenterpriseserver: { 
@@ -20,6 +23,15 @@ class comoonics {
         $comversion="5.0"
         $comlevel="preview"
       }
+   }
+   if $localfiles {
+      include comoonics::install-localfiles
+   }
+   if $plymouth {
+      include comoonics::install-plymouth
+   }
+   if $debug {
+      include comoonics::install-debugfiles
    }
 }
 
@@ -51,6 +63,7 @@ define comoonics::create($rootdevice, $grubdefault=false, $localfiles=true, $ply
              grubdefault=>$grubdefault,
              initrd_prefix=>$initrd_prefix,
              initrd_suffix=>$initrd_suffix,
+             tag => [ "comoonics" ]
       }
   }
   notice("comoonics::create: END")

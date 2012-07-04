@@ -8,6 +8,7 @@ class comoonics::install {
      package { $corepackages:
        ensure => present,
        require => Class["comoonics::repo"],
+       tag => [ "comoonics" ]
      }
    }
 }
@@ -21,6 +22,7 @@ class comoonics::install-localfiles {
         $packages:
            ensure => present,
            require => Class["comoonics::repo"],
+           tag => [ "comoonics", "comoonics-localfiles" ]
      }
    }
 }
@@ -34,6 +36,7 @@ class comoonics::install-plymouth {
         $packages:
            ensure => present,
            require => Class["comoonics::repo"],
+           tag => [ "comoonics", "comoonics-plymouth" ]
      }
    }
 }
@@ -49,6 +52,7 @@ class comoonics::install-debugfiles {
            mode => 644,
            ensure => present,
            source => "puppet:///modules/comoonics/post.mkinitrd.d/99-debug-repository.sh", 
+           tag => [ "comoonics", "comoonics-debug" ]
      }
    }
 } 

@@ -32,6 +32,7 @@ define comoonics::grubentry($rootdevice, $grubdefault=false, $grubtitle="com.oon
             context => "/files",
             changes => [ $defaultchanges, $morechanges, $distchanges ],
             onlyif => "get /files$mygrubconf/title[1] != \"${grubtitle}\"",
+            tag => [ "comoonics", "comoonics-grub" ]
       }
    }
 }
