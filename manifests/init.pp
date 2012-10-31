@@ -3,6 +3,7 @@ class comoonics {
    $localfiles = false
    $plymouth = false
    $debug = false
+   $localclone = false
    notice("com.oonics Module init.pp lsbdistid: ${lsbdistid}..")
    case $operatingsystem {
       centos,redhat,redhatenterpriseserver: { 
@@ -24,6 +25,7 @@ class comoonics {
         $comlevel="preview"
       }
    }
+   notice("localfiles: $localfiles, plymouth: $plymouth, debug: $debug, localclone: $localclone")
    if $localfiles {
       include comoonics::install-localfiles
    }
@@ -33,9 +35,12 @@ class comoonics {
    if $debug {
       include comoonics::install-debugfiles
    }
+   if $localclone {
+      include comoonics::install-localclone
+   }
 }
 
-define comoonics::create($rootdevice, $grubdefault=false, $localfiles=true, $plymouth=true, $mkinitrd=true, $grub=true, $debugfiles=false) {
+define comoonics::create($rootdevice, $bootdevice, $bootdir="/boot", $bootfstype="ext3", $grubdefault=false, $localfiles=true, $plymouth=true, $mkinitrd=true, $grub=true, $debugfiles=false) {
   notice("comoonics::create: BEGIN")
   include comoonics
   include comoonics::repo, comoonics::install
@@ -54,6 +59,9 @@ define comoonics::create($rootdevice, $grubdefault=false, $localfiles=true, $ply
      notice("comoonics::create: Create mkinitrd $kernelrelease")
      comoonics::mkinitrd{
         $kernelrelease:
+           bootdevice => $bootdevice,
+           bootfstype => $bootfstype,
+           bootdir => $bootdir,
      }
   }   
   if $grub {

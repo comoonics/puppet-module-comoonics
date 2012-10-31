@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+                               ____  __  __  ____  ____  ____  ____
+                              (  _ \(  )(  )(  _ \(  _ \( ___)(_  _)
+ this file is maintained with  )___/ )(__)(  )___/ )___/ )__)   )(
+                              (__)  (______)(__)  (__)  (____) (__)
+-->
+<!DOCTYPE localclone SYSTEM "<%= dtd %>">
+<localclone name="localclone2disk" source="disk" destination="disk">
+  <cluster name="<%= name %>" sourcesuffix="" destsuffix="C"/>
+  <sourcedisks>
+     <bootdisk name="<%= sourcebootdisk %>"/>
+     <rootdisk name="<%= sourcerootdisk %>"/>
+  </sourcedisks>
+  <destdisks>
+    <bootdisk name="<%= destbootdisk %>" samesize="1"/>
+    <rootdisk name="<%= destrootdisk %>" samesize="1"/>
+  </destdisks>
+  <kernel version="<%= kernelrelease %>"/>
+</localclone>
