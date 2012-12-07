@@ -1,0 +1,27 @@
+# This is the com.oonics PXE boot config file
+timeout 100
+prompt 1
+default comoonics
+LABEL comoonics
+KERNEL <%= kernelfile %>
+APPEND initrd=<%= initrdfile %> nodeid=<%= nodeid %> root=<%= rootpath %>
+
+LABEL comoonics-failsafe
+KERNEL <%= kernelfile %>
+APPEND initrd=<%= initrdfailsafefile %> nodeid=<%= nodeid %> root=<%= rootpath %>
+
+<% if rootpathclone %>
+LABEL comoonics-clone
+KERNEL <%= kernelfile %>
+APPEND initrd=<%= initrdfile %> nodeid=<%= nodeid %> root=<%= rootpathclone %>
+
+LABEL comoonics-clone-failsafe
+KERNEL <%= kernelfile %>
+APPEND initrd=<%= initrdfailsafefile %> nodeid=<%= nodeid %> root=<%= rootpathclone %>
+<%- end%>
+
+<% if debug %>
+LABEL debug
+KERNEL <%= kernelfile %>
+APPEND initrd=<%= initrdfile %> nodeid=<%= nodeid %> root=<%= rootpath %> com-debug com-step com-expert
+<%- end%>

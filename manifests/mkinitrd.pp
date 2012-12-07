@@ -16,7 +16,9 @@ define comoonics::mkinitrd($bootdevice, $bootfstype, $bootdir="/boot", $force=tr
       "mkinitrd $initrddir/${initrd_prefix}${name}${initrd_suffix} ${name}":
          path => [ "/opt/atix/comoonics-bootimage", "/bin", "/usr/bin", "/sbin", "/usr/sbin" ],
          creates => $createdfiles,
-         require => [ Class["comoonics::install"], Mount["$bootdir"] ],
-         tag => [ "comoonics" ]
+         require => $bootdevice? {
+           /.+/ => [ Class["comoonics::install"], Mount["$bootdir"], Class["comoonics::install::deps"] ],
+           default => [ Class["comoonics::install"], Class["comoonics::install::deps"] ],
+         }
    }
 }

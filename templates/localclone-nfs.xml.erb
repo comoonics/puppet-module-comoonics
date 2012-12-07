@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+                               ____  __  __  ____  ____  ____  ____
+                              (  _ \(  )(  )(  _ \(  _ \( ___)(_  _)
+ this file is maintained with  )___/ )(__)(  )___/ )___/ )__)   )(
+                              (__)  (______)(__)  (__)  (____) (__)
+
+Com-EC Konfiguration for NFS Sharedroot clones
+-->
+<!DOCTYPE localclone SYSTEM "<%= dtd %>">
+<localclone name="localclone2disk" source="disk" destination="disk">
+  <cluster name="<%= name %>" sourcesuffix="" destsuffix="C"/>
+  <sourcedisks>
+     <bootdisk name="<%= sourcebootdisk %>/boot" fstype="nfs" type="nfs"/>
+     <rootdisk name="<%= sourcerootdisk %>" fstype="nfs" type="nfs"/>
+  </sourcedisks>
+  <destdisks>
+    <bootdisk name="<%= destbootdisk %>/boot" fstype="nfs" type="nfs"/>
+    <rootdisk name="<%= destrootdisk %>" fstype="nfs" type="nfs"/>
+  </destdisks>
+  <kernel version="<%= kernelrelease %>"/>
+</localclone>
