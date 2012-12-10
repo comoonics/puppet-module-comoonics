@@ -1,4 +1,4 @@
-define comoonics::create($rootdevice, $boodevice="", $bootdir="/boot", $bootfstype="ext3", $grubdefault=false, $localfiles=true, $plymouth=true, $mkinitrd=true, $grub=true, $debugfiles=false) {
+define comoonics::create($rootdevice, $bootdevice="", $bootdir="/boot", $bootfstype="ext3", $grubdefault=false, $localfiles=true, $plymouth=true, $mkinitrd=true, $grub=true, $debugfiles=false) {
   notice("comoonics::create: BEGIN")
   include comoonics
   include comoonics::repo, comoonics::install
