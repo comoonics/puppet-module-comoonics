@@ -11,11 +11,11 @@ Com-EC Konfiguration for NFS Sharedroot clones
 <localclone name="localclone2disk" source="disk" destination="disk">
   <cluster name="<%= name %>" sourcesuffix="" destsuffix="C"/>
   <sourcedisks>
-     <bootdisk name="<%= sourcebootdisk %>/boot" fstype="nfs" type="nfs"/>
+     <bootdisk name="<%= sourcebootdisk %>" fstype="nfs" type="nfs"/>
      <rootdisk name="<%= sourcerootdisk %>" fstype="nfs" type="nfs"/>
   </sourcedisks>
   <destdisks>
-    <bootdisk name="<%= destbootdisk %>/boot" fstype="nfs" type="nfs"/>
+    <bootdisk name="<%= destbootdisk %>" fstype="nfs" type="nfs"/>
     <rootdisk name="<%= destrootdisk %>" fstype="nfs" type="nfs"/>
   </destdisks>
   <kernel version="<%= kernelrelease %>"/>
