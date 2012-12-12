@@ -1,4 +1,4 @@
-define comoonics::grubentry($rootdevice, $grubdefault=false, $grubtitle="com.oonics for $operatingsystem ($name)", $kernel_prefix="vmlinuz-", $initrd_prefix="initrd_sr-", $initrd_suffix=".img", $bootrootdir="/", $grubconf="") {
+define comoonics::grubentry($rootdevice="/dev/vg_$hostname/lv_root", $grubdefault=false, $grubtitle="com.oonics for $operatingsystem ($name)", $kernel_prefix="vmlinuz-", $initrd_prefix="initrd_sr-", $initrd_suffix=".img", $bootrootdir="/", $grubconf="", $nodeid="1") {
    if $grubconf == "" and $comoonics::comdist == "rhel" {
       $mygrubconf="/etc/grub.conf"
    } elsif $grubconf == "" and $comoonics::comdist == "sles" {
@@ -13,6 +13,7 @@ define comoonics::grubentry($rootdevice, $grubdefault=false, $grubtitle="com.oon
                       "set /files$mygrubconf/title[1]/root \"(hd0,0)\"",
                       "set /files$mygrubconf/title[1]/kernel \"${bootrootdir}${kernel_prefix}${name}\"",
                       "set /files$mygrubconf/title[1]/kernel/root \"$rootdevice\"",
+                      "set /files$mygrubconf/title[1]/kernel/nodeid \"$nodeid\"",
                       "set /files$mygrubconf/title[1]/initrd \"${bootrootdir}${initrd_prefix}${name}${initrd_suffix}\"",
       ]
       if $comoonics::comdist == "rhel" {
@@ -27,12 +28,12 @@ define comoonics::grubentry($rootdevice, $grubdefault=false, $grubtitle="com.oon
       if $grubdefault {
          $morechanges = [ "set /files$mygrubconf/default 0", ]
       }
+      notice("setting up grub in $mygrubconf for $comoonics::comdist rootdevice=$rootdevice..")
       augeas {
         "grubentry1":
             context => "/files",
             changes => [ $defaultchanges, $morechanges, $distchanges ],
             onlyif => "get /files$mygrubconf/title[1] != \"${grubtitle}\"",
-            tag => [ "comoonics", "comoonics-grub" ]
       }
    }
 }
