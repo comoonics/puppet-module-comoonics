@@ -3,7 +3,7 @@ class comoonics::sharedroot {
   include comoonics::params
   include comoonics::cdsls::sharedroot
   notice("localfiles: $localfiles, plymouth: $plymouth, debug: $debug, localclone: $localclone")
-  if $nfsroot {
+  if $rootfilesystem == "nfs" {
      notice("nfsroot: $nfsroot, nodeid: $nodeid")
      comoonics::tools::fstab {
       "/":
